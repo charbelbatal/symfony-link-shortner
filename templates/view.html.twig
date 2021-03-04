@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% if isEdit is defined and isEdit %}
+{% form_theme linkShortenForm 'form/fields.html.twig' %}
+{% endif %}
+
+{% block page_name %}{{ isEdit is defined and isEdit ? 'link-edit' : 'link-view' }}{% endblock %}
+
+{% block body %}
+<div class="row mb-4">
+    <div class="col-12 text-uppercase">
+        {% if isEdit is defined and isEdit %}
+        <h1>Editing Shortened Link</h1>
+        {% else %}
+        <h1>Viewing Shortened Link</h1>
+        {% endif %}
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-sm-12 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-uppercase">Original URL</h5>
+                {% if isEdit is defined and isEdit %}
+                <p class="card-text">
+                    {{ form_start(linkShortenForm, { attr: { id: "shortenUrlForm"} }) }}
+                    <div class="form-group">
+                        {{ form_widget(linkShortenForm.url) }}
+                        {{ form_errors(linkShortenForm.url) }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="{{ path('link_info_view', { shortCode : link.shortCode }) }}" class="btn btn-default">Cancel</a>
+                    {{ form_end(linkShortenForm) }}
+                </p>
+                {% else %}
+                <p class="card-text"><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></p>
+                {% endif %}
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong># of Hits:</strong> {{ link.hits }}</li>
+                <li class="list-group-item"><strong>Short URL:</strong> <a href="{{ url('link_short', {shortCode: link.shortCode}) }}"  target="_blank">{{ url('link_short', {shortCode: link.shortCode}) }}</a></li>
+                <li class="list-group-item"><strong>IP Address:</strong> {{ link.ipAddress }}</li>
+                <li class="list-group-item"><strong>Date Created:</strong> {{ link.createdAt|date }}</li>
+                <li class="list-group-item"><strong>Date Updated:</strong> {{ link.updatedAt|date }}</li>
+            </ul>
+            <div class="card-body">
+                <a href="{{ url('link_short', {shortCode: link.shortCode}) }}" class="card-link" target="_blank">Short link</a>
+                <a href="{{ path('link_info_edit', { shortCode: link.shortCode })}}" class="card-link">Edit link</a>
+                <a href="{{ path('link_info_delete', { shortCode: link.shortCode }) }}" class="card-link delete-link"
+                   data-toggle="modal" data-target="#linkRemovalModal"
+                   data-main-url="{{ link.url }}"
+                   data-delete-url="{{ path('link_info_delete', {'shortCode' : link.shortCode}) }}">Delete link</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h2 class="text-uppercase mb-4">Link Stats</h2>
+        <table id="link-stats-list" class="table table-striped table-bordered" data-ajax-url="{{ path('ajax_link_stats_list', {shortCode: link.shortCode}) }}">
+            <thead>
+                <tr>
+                    <th>IP</th>
+                    <th>Browser</th>
+                    <th>Device</th>
+                    <th>OS</th>
+                    <th>Created (EST)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+    {% include 'modals/link-delete.html.twig' %}
+{% endblock %}
+
+{% block toasts %}
+{% if app.session.flashbag.has('link_success') %}
+<div class="toast toast-success hide fixed-top-right m-3" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+    <div class="toast-header">
+        <strong class="mr-auto">Alert</strong>
+        <small></small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body">
+        {{ app.session.flashbag.get('link_success')[0] }}
+    </div>
+</div>
+{% endif %}
+<div class="toast toast-message hide fixed-top-right m-3" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+    <div class="toast-header">
+        <strong class="mr-auto">Alert</strong>
+        <small></small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body"></div>
+</div>
+{% endblock %}

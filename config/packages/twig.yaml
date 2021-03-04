@@ -3,3 +3,8 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     exception_controller: null
+    date:
+        timezone: '%app.default_timezone%'
+    globals:
+        site_name: '%app.site_name%'
+        developer_name: '%app.developer_name%'

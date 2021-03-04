@@ -4,6 +4,14 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    locale: 'en'
+
+    app.default_timezone: 'America/New_York'
+    app.timezone_pt: 'America/Los_Angeles'
+
+    app.developer_name: '%env(DEVELOPER_NAME)%'
+    app.site_main_domain: '%env(SITE_MAIN_DOMAIN)%'
+    app.site_name: '%env(SITE_NAME)%'
 
 services:
     # default configuration for services in *this* file

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block page_name %}link-list{% endblock %}
+
+{% block body %}
+<div class="row mb-3">
+    <div class="col-12">
+        <h1 class="text-uppercase">Shortened Link List</h1>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-12">
+        <table id="link-list" class="table table-striped table-bordered" data-ajax-url="{{ path('ajax_link_list') }}">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Url</th>
+                <th>Short Url</th>
+                <th>Hits</th>
+                <th>IP</th>
+                <th>Created (EST)</th>
+                <th>Updated (EST)</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

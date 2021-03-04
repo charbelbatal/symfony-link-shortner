@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme linkShortenForm 'form/fields.html.twig' %}
+
+{% block page_name %}homepage{% endblock %}
+
+{% block body %}
+<div class="row mb-3">
+    <div class="col-12">
+        <h1 class="text-uppercase">Shorten Your Link</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        {{ form_start(linkShortenForm, { attr: { id: "shortenUrlForm", class: "form-container" } }) }}
+        <div class="form-group">
+            {{ form_label(linkShortenForm.url) }}
+            {{ form_widget(linkShortenForm.url) }}
+            {{ form_errors(linkShortenForm.url) }}
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg">Shorten URL</button>
+        </div>
+        {{ form_end(linkShortenForm) }}
+    </div>
+</div>
+{% endblock %}
