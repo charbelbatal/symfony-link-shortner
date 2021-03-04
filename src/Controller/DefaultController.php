@@ -24,6 +24,7 @@ class DefaultController extends AbstractController
      * @param Request $request
      * @param UrlShortnerService $urlShortnerService
      * @return Response
+     * @throws \Exception
      */
     public function index(Request $request, UrlShortnerService $urlShortnerService): Response
     {
