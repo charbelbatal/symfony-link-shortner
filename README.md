@@ -1,7 +1,7 @@
 Getting started with Symfony Link Shortner
 ==========================================
 
-Symfony Link Shortner provides an easy way to shorten 
+Symfony Link Shortner provides an easy way to shorten URLs
 
 ## Requirements
 
